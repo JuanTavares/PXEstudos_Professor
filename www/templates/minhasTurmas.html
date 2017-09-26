@@ -1,0 +1,9 @@
+<ion-view title="Minhas Turmas" id="page2">
+    <ion-content padding="true" class="has-header">
+        <ion-list>
+            <ion-item ng-repeat="turma in listaDeTurmas" href="#">
+                {{turma.Curso}} - {{turma.Semestre}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

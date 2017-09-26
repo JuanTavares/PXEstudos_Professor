@@ -1,0 +1,29 @@
+<ion-view title="Signup" hide-nav-bar="true" cache-view="false" nav-transition="none" id="page5">
+  <ion-content padding="true" style="background: url(img/cqbllz6HRZS6lVLcv82j_library.jpg) no-repeat center;background-size:cover;" class="manual-ios-statusbar-padding" scroll="false">
+    <div ng-if="mensagemErro" id="signup-markdown2" class="show-list-numbers-and-dots error-box">
+      <p style="color:#000000;">{{mensagemErro}}</p>
+    </div>
+    <form id="signup-form2" class="list center-form">
+      <div>
+        <img src="img/OdnxU7COQearF4gZHwkR_ionicons_2-0-1_ios-bookmarks-outline_256_0_ecf0f1_none.png" style="display: block; width: 40%; height: auto; margin-left: auto; margin-right: auto;">
+      </div>
+      <ion-list id="signup-list3">
+        <label class="item item-input top-input" id="signup-input3">
+          <span class="input-label">Nome</span>
+          <input type="text" placeholder="" ng-model="usuario.nome">
+        </label>
+        <label class="item item-input" id="signup-input5">
+          <span class="input-label">Email</span>
+          <input type="email" placeholder="" ng-model="usuario.email">
+        </label>
+        <label class="item item-input bottom-input" id="signup-input4">
+          <span class="input-label">Senha</span>
+          <input type="password" placeholder="" ng-model="usuario.senha">
+        </label>
+      </ion-list>
+      <div class="spacer" style="height: 40px;"></div>
+      <button id="signup-button3" class="button button-positive button-block" ng-click="gravarDadosUsuario()">Cadastrar</button>
+      <a ui-sref="login()" id="signup-button4" class="button button-light button-block button-clear">Já possui uma conta?</a>
+    </form>
+  </ion-content>
+</ion-view>

@@ -1,1 +1,21 @@
 /* Empty. Add your own CSS if you like */
+
+.top-container {
+  height: 45%;
+  overflow: hidden;
+}
+
+.error-box {
+  margin-top: 10px;
+}
+
+.button-positive:disabled {
+  opacity: 0.5;
+}
+
+#edit-button {
+	width: 290px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}

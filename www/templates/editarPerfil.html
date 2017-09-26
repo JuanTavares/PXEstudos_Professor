@@ -1,0 +1,34 @@
+<ion-view title="Editar Perfil" id="page6">
+    <ion-nav-buttons side="right" class="has-header">
+        <button class="button button-icon icon No Icon" ng-click="atualizarPerfil()"> Salvar</button>
+    </ion-nav-buttons>
+    <ion-content padding="false" scroll="true" class="has-header">
+        <div id="meuPerfil-container3" class="top-container">
+            <div class="img-contain">
+                <img firebase-src="{{imgPerfil}}" ng-model="editar.foto" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+            </div>
+        </div>
+        <div class="spacer" style="width: 268px; height: 30px;"></div>
+
+        <form>
+            <button id="edit-button" class="button button-positive button-block" ng-click="tirarFoto()">Editar Foto</button>
+            <ion-list id="meuPerfil-heading5">
+                <ion-item class="item-icon-left item-floating-label" id="meuPerfil-list-item10">
+                    <i class="icon ion-person"></i>
+                    <span class="input-label">Nome do Professor</span>
+                    <input type="text" placeholder="{{usuarioNome}}" ng-model="editar.nome">
+                </ion-item>
+                <ion-item class="item-icon-left item-floating-label" id="meuPerfil-list-item8">
+                    <i class="icon ion-leaf"></i>
+                    <span class="input-label">Data de Nascimento</span>
+                    <input type="date" placeholder="{{usuarioNascimento}}" ng-model="editar.nascimento">
+                </ion-item>
+                <ion-item class="item-icon-left item-floating-label" id="meuPerfil-list-item9">
+                    <i class="icon ion-iphone"></i>
+                    <span class="input-label">Numero do Celular</span>
+                    <input type="tel" placeholder="{{usuarioCelular | brPhoneNumber}}" ng-model="editar.celular">
+                </ion-item>
+            </ion-list>
+        </form>
+    </ion-content>
+</ion-view>
