@@ -7,7 +7,7 @@ angular.module('app')
 
         var storageRef = firebase.storage().ref("Professor_imgProfile/" + usuarioLogado.uid + "/IMG_0223.JPG");
         var storage = $firebaseStorage(storageRef);
-        $scope.foto = storageRef;
+
         $ionicLoading.show({
             template: 'Carregando ...'
         });
@@ -117,16 +117,11 @@ angular.module('app')
 
         $scope.editar = {};
 
-        /*if (usuarioLogado.photoURL) {
-            $scope.imgPerfil = usuarioLogado.photoURL;
-        } else {*/
-            $scope.imgPerfil = "img/q1szUiFXSw6qNm6WvncI_eG3nOGIZSnGIMROFgK7n_students.png";
-        //}
-
         obj.$loaded()
             .then(function(data) {
                 $scope.usuarioNome = usuarioLogado.displayName;
                 $scope.usuarioNascimento = obj.DataNascimento;
+                $scope.imgPerfil = "img/q1szUiFXSw6qNm6WvncI_eG3nOGIZSnGIMROFgK7n_students.png"
                 $scope.usuarioCelular = obj.NumeroCelular;
             })
             .catch(function(error) {
@@ -135,7 +130,6 @@ angular.module('app')
         /*#############--Função de atualização--#############*/
 
         $scope.atualizarPerfil = function() {
-
 
             if ($scope.editar.nome) {
                 obj.Nome = $scope.editar.nome;
@@ -155,8 +149,6 @@ angular.module('app')
 
             usuarioLogado.updateProfile({
                 displayName: $scope.editar.nome,
-                //photoURL: URL DO STORAGE DO FIREBASE,
-                photoURL: "img/q1szUiFXSw6qNm6WvncI_eG3nOGIZSnGIMROFgK7n_students.png",
             }).then(function() {
                 // Update successful.
                 $state.go('menu.meuPerfil');
