@@ -1,12 +1,9 @@
 angular.module('app')
 
-    .controller('meuPerfilCtrl', function($scope, $stateParams, firebase, MeuStorage, $timeout, $ionicLoading, $firebaseStorage) {
+    .controller('meuPerfilCtrl', function($scope, $stateParams, firebase, MeuStorage, $timeout, $ionicLoading) {
 
         var usuarioLogado = firebase.auth().currentUser;
         var db = firebase.database().ref('Professor/' + usuarioLogado.uid);
-
-        var storageRef = firebase.storage().ref("Professor_imgProfile/" + usuarioLogado.uid + "/IMG_0223.JPG");
-        var storage = $firebaseStorage(storageRef);
 
         $ionicLoading.show({
             template: 'Carregando ...'
@@ -16,9 +13,21 @@ angular.module('app')
             $timeout(function() {
                 $scope.usuarioNome = data.val().Nome;
                 $scope.usuarioEmail = usuarioLogado.email;
-                $scope.usuarioNascimento = data.val().DataNascimento;
-                $scope.imgPerfil = "img/q1szUiFXSw6qNm6WvncI_eG3nOGIZSnGIMROFgK7n_students.png";
-                $scope.usuarioCelular = data.val().NumeroCelular;
+                if (data.val().DataNascimento) {
+                    $scope.usuarioNascimento = data.val().DataNascimento;
+                } else {
+                    $scope.usuarioNascimento = "Data de Nascimento";
+                }
+                if (data.val().imgProfile) {
+                    $scope.imgPerfil = data.val().imgProfile;
+                } else {
+                    $scope.imgPerfil = 'img/q1szUiFXSw6qNm6WvncI_eG3nOGIZSnGIMROFgK7n_students.png';
+                }
+                if (data.val().NumeroCelular) {
+                    $scope.usuarioCelular = data.val().NumeroCelular;
+                } else {
+                    $scope.usuarioCelular = "12345678910";
+                }
             })
             $ionicLoading.hide();
         })
@@ -39,7 +48,7 @@ angular.module('app')
 
     .controller('minhaAgendaCtrl', function($scope, $stateParams, firebase) {
 
-        var user = firebase.auth().currentUser; //funciona
+        var usuarioLogado = firebase.auth().currentUser;
 
     })
 
@@ -54,7 +63,11 @@ angular.module('app')
 
         db.on('value', function(data) {
             $timeout(function() {
-                $scope.imgPerfil = "img/q1szUiFXSw6qNm6WvncI_eG3nOGIZSnGIMROFgK7n_students.png"
+                if (data.val().imgProfile) {
+                    $scope.imgPerfil = data.val().imgProfile;
+                } else {
+                    $scope.imgPerfil = 'img/q1szUiFXSw6qNm6WvncI_eG3nOGIZSnGIMROFgK7n_students.png';
+                }
                 $scope.usuarioNome = data.val().Nome;
 
             })
@@ -109,7 +122,7 @@ angular.module('app')
         $scope.mensagemErro = "Funcionalidade em desenvolvimento";
 
     })
-    .controller('editarPerfilCtrl', function($scope, firebase, $state, $cordovaCamera, $firebaseObject, $filter) {
+    .controller('editarPerfilCtrl', function($scope, firebase, $state, $cordovaCamera, $firebaseObject, $filter, $ionicPopup) {
 
         var usuarioLogado = firebase.auth().currentUser;
         var db = firebase.database().ref('Professor/' + usuarioLogado.uid);
@@ -117,12 +130,30 @@ angular.module('app')
 
         $scope.editar = {};
 
+        var imagem = null;
+
         obj.$loaded()
             .then(function(data) {
-                $scope.usuarioNome = usuarioLogado.displayName;
-                $scope.usuarioNascimento = obj.DataNascimento;
-                $scope.imgPerfil = "img/q1szUiFXSw6qNm6WvncI_eG3nOGIZSnGIMROFgK7n_students.png"
-                $scope.usuarioCelular = obj.NumeroCelular;
+                if (usuarioLogado.displayName) {
+                    $scope.usuarioNome = usuarioLogado.displayName;
+                } else {
+                    $scope.usuarioNome = "Nome do Professor";
+                }
+                if (obj.DataNascimento) {
+                    $scope.usuarioNascimento = obj.DataNascimento;
+                } else {
+                    $scope.usuarioNascimento = "Data de Nascimento";
+                }
+                if (obj.imgProfile) {
+                    $scope.imgPerfil = obj.imgProfile;
+                } else {
+                    $scope.imgPerfil = 'img/q1szUiFXSw6qNm6WvncI_eG3nOGIZSnGIMROFgK7n_students.png';
+                }
+                if (obj.NumeroCelular) {
+                    $scope.usuarioCelular = obj.NumeroCelular;
+                } else {
+                    $scope.usuarioCelular = "12345678910";
+                }
             })
             .catch(function(error) {
                 console.error("Error:", error);
@@ -140,11 +171,17 @@ angular.module('app')
             if ($scope.editar.nascimento) {
                 obj.DataNascimento = $filter('date')($scope.editar.nascimento, 'dd/MM/yyyy');
             }
+            if (imagem) {
+                obj.imgProfile = $scope.imgPerfil;
+            }
             obj.$save().then(function(ref) {
                 ref.key === obj.$id; // true
                 $state.go('menu.meuPerfil');
             }, function(error) {
-                console.log("Error:", error);
+                $ionicPopup.alert({
+                    title: error.name,
+                    template: error.message,
+                });
             });
 
             usuarioLogado.updateProfile({
@@ -154,22 +191,31 @@ angular.module('app')
                 $state.go('menu.meuPerfil');
             }, function(error) {
                 // An error happened.
-                console.log(error);
+                $ionicPopup.alert({
+                    title: error.name,
+                    template: error.message,
+                });
             });
         }
-
+        /*#############--Função de chamada câmera--#############*/
         $scope.tirarFoto = function() {
             var opcoes = {
                 quality: 70,
                 correctOrientation: true,
-                allowEdit: true
+                allowEdit: true,
+                encodingType: Camera.EncodingType.JPEG,
+                destinationType: Camera.DestinationType.DATA_URL,
             }
 
             $cordovaCamera.getPicture(opcoes)
                 .then(function(foto) {
-                    $scope.imgPerfil = foto;
-                }, function(erro) {
-                    console.log(erro);
+                    $scope.imgPerfil = "data:image/jpeg;base64," + foto;
+                    imagem = "1";
+                }, function(error) {
+                    $ionicPopup.alert({
+                        title: error.name,
+                        template: error.message,
+                    });
                 })
         }
 

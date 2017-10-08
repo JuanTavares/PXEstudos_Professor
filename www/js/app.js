@@ -43,13 +43,12 @@ angular.module('app', ['ionic', 'ngCordova', 'firebase', 'idf.br-filters'])
                 if (user) {
                     // User is signed in.
                     console.log(user);
-                    
                     $state.go('menu.meuPerfil');
-                    
+
                 } else {
                     // No user is signed in.
                     $state.go('login');
-                    
+
                 }
 
             });
