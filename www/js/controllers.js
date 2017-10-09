@@ -117,10 +117,43 @@ angular.module('app')
 
     })
 
-    .controller('signupCtrl', function($scope, $stateParams, firebase) {
+    .controller('signupCtrl', function($scope, $stateParams, firebase, $ionicPopup, $ionicLoading, $state) {
 
-        $scope.mensagemErro = "Funcionalidade em desenvolvimento";
+        $scope.usuario = {};
 
+        $scope.mensagemErro = "";
+
+        $scope.enviarEmail = function() {
+
+            $ionicLoading.show({
+                template: 'Carregando ...'
+            });
+
+            var auth = firebase.auth();
+            var emailAddress = $scope.usuario.email;
+
+            auth.sendPasswordResetEmail($scope.usuario.email).then(function() {
+                // Email sent.
+                $ionicPopup.alert({
+                    title: 'Email enviado com sucesso!',
+                    template: 'Por favor verifique seu email para alterar sua senha de login',
+                }).then(function() {
+                    $state.go('login');
+                });
+                $ionicLoading.hide();
+            }, function(error) {
+                // An error happened.
+                $ionicLoading.hide();
+                switch (error.code) {
+                    case ("auth/user-not-found"):
+                        $scope.mensagemErro = "Usuário não encontrado";
+                        break;
+                    case ("auth/invalid-email"):
+                        $scope.mensagemErro = "Email inválido";
+                        break;
+                }
+            });
+        }
     })
     .controller('editarPerfilCtrl', function($scope, firebase, $state, $cordovaCamera, $firebaseObject, $filter, $ionicPopup) {
 
