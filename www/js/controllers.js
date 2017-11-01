@@ -75,15 +75,23 @@ angular.module('app')
         $ionicLoading.show({
             template: 'Carregando ...'
         });
+        $scope.form = {};
         console.log(obj);
         $ionicLoading.hide();
         $scope.listaDeAtvs = null;
 
-        $scope.activeSection = 1;
-        
-        $scope.changeSection = function(s){
-            $scope.activeSection = s;
-            console.log(s);
+        $scope.caixaSelecionada = function() {
+            switch ($scope.form.tipoDeArquivo) {
+                case "Documento":
+                    $scope.source = "img/docicon.png";
+                    break;
+                case "Slide":
+                    $scope.source = "img/slides.png";
+                    break;
+                case "PDF":
+                    $scope.source = "img/pdf-icon.png";
+                    break;
+            }
         }
 
 

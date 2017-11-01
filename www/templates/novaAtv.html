@@ -12,9 +12,7 @@
                     </label>
                 </ion-item>
                 <ion-item class="item-thumbnail-left" id="page-list-item11">
-                    <img ng-src="img/pdf-icon.png" ng-show="activeSection == 1">
-                    <img ng-src="img/docicon.png" ng-show="activeSection == 1">
-                    <img ng-src="img/slides.png" ng-show="activeSection == 3">
+                    <img ng-src="{{source}}">
                     <label class="item item-input item-select">
                             <h2>Bimestre</h2>
                             <select ng-model="form.bimestre" ng-init="form.bimestre = form.bimestre || '1º'" required>
@@ -24,10 +22,10 @@
                         </label>
                     <label class="item item-input item-select">
                             <h2>Tipo</h2>
-                            <select ng-model="form.tipoDeArquivo" ng-init="form.tipoDeArquivo = form.tipoDeArquivo || 'Documento'" required>
-                                <option ng-click="changeSection(1)">Documento</option>
-                                <option ng-click="changeSection(2)">Slide</option>
-                                <option ng-click="changeSection(3)">PDF</option>
+                            <select ng-model="form.tipoDeArquivo" ng-init="form.tipoDeArquivo = form.tipoDeArquivo || 'Documento'" ng-selected="caixaSelecionada()" required>
+                                <option>Documento</option>
+                                <option>Slide</option>
+                                <option>PDF</option>
                             </select>
                         </label>
                     <label class="item item-input"></label>
