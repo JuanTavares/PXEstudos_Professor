@@ -1,7 +1,7 @@
 <ion-view title="Minhas Turmas" id="page2">
-    <ion-content padding="true" class="has-header">
+    <ion-content padding="true" scroll="true" class="has-header">
         <ion-list>
-            <ion-item ng-repeat="turma in listaDeTurmas" href="#">
+            <ion-item ng-repeat="turma in listaDeTurmas" ui-sref="menu.turmaEscolhida()" ng-click="salvarTurma({{turma}})">
                 {{turma.Curso}} - {{turma.Semestre}}
             </ion-item>
         </ion-list>

@@ -24,6 +24,26 @@ angular.module('app')
                 }
             })
 
+            .state('menu.turmaEscolhida', {
+                url: '/turmaEscolhida',
+                views: {
+                    'side-menu21': {
+                        templateUrl: 'templates/turmaEscolhida.html',
+                        controller: 'turmaEscolhidaCtrl'
+                    }
+                }
+            })
+
+            .state('menu.novaAtv', {
+                url: '/novaAtv',
+                views: {
+                    'side-menu21': {
+                        templateUrl: 'templates/novaAtv.html',
+                        controller: 'novaAtvCtrl'
+                    }
+                }
+            })
+
             .state('menu.minhaAgenda', {
                 url: '/minhaAgenda',
                 views: {

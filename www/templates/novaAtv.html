@@ -1,0 +1,53 @@
+<ion-view id="pageNovaAtv">
+    <ion-nav-title>{{turmaEscolhida.Nome}}</ion-nav-title>
+    <ion-nav-buttons side="right" class="has-header">
+        <button class="button button-icon icon ion-checkmark-round" ng-click="enviarAula()"></button>
+    </ion-nav-buttons>
+    <ion-content padding="true" scroll="true" class="has-header card">
+        <div id="page-card23">
+            <form>
+                <ion-item id="page-list-item-divider1">
+                    <label class="item item-input">
+                        <input type="text" ng-model="form.titulo" placeholder="Título da Aula" required>
+                    </label>
+                </ion-item>
+                <ion-item class="item-thumbnail-left" id="page-list-item11">
+                    <img ng-src="img/pdf-icon.png" ng-show="activeSection == 1">
+                    <img ng-src="img/docicon.png" ng-show="activeSection == 1">
+                    <img ng-src="img/slides.png" ng-show="activeSection == 3">
+                    <label class="item item-input item-select">
+                            <h2>Bimestre</h2>
+                            <select ng-model="form.bimestre" ng-init="form.bimestre = form.bimestre || '1º'" required>
+                                <option selected="selected">1º</option>
+                                <option>2º</option>
+                            </select>
+                        </label>
+                    <label class="item item-input item-select">
+                            <h2>Tipo</h2>
+                            <select ng-model="form.tipoDeArquivo" ng-init="form.tipoDeArquivo = form.tipoDeArquivo || 'Documento'" required>
+                                <option ng-click="changeSection(1)">Documento</option>
+                                <option ng-click="changeSection(2)">Slide</option>
+                                <option ng-click="changeSection(3)">PDF</option>
+                            </select>
+                        </label>
+                    <label class="item item-input"></label>
+                </ion-item>
+                <div style="margin-right:-20px;">
+                    <button id="page-button7" style="left:-10px;" class="button button-positive button-full">Escolher Arquivo</button>
+                </div>
+                <div class="item item-body" id="page-list-item-container9">
+                    <div id="page-markdown11" class="show-list-numbers-and-dots">
+                        <h2 style="margin-top:0px;color:#000000;">
+                            Descrição da Aula
+                        </h2>
+                        <div style="text-align:justify;">
+                            <label>
+                                <textarea rows="10" cols="50" style="resize: none; width:100%;  overflow: hidden;" ng-model="form.descricao">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

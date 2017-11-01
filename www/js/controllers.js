@@ -33,17 +33,63 @@ angular.module('app')
         })
     })
 
-    .controller('minhasTurmasCtrl', function($scope, $stateParams, firebase, MeuStorage, $ionicLoading, $firebaseObject) {
+    .controller('minhasTurmasCtrl', function($scope, $stateParams, firebase, MeuStorage, $ionicLoading, $firebaseObject, $firebaseArray, $rootScope) {
 
         $ionicLoading.show({
             template: 'Carregando ...'
         });
 
         var db = firebase.database().ref('Turma/');
-        var obj = $firebaseObject(db);
+        var obj = $firebaseArray(db);
         $scope.listaDeTurmas = obj;
 
+        $scope.salvarTurma = function(dados) {
+            $rootScope.turmaId = dados.$id;
+            console.log(dados.$id);
+        }
+
         $ionicLoading.hide();
+    })
+
+    .controller('turmaEscolhidaCtrl', function($scope, $stateParams, firebase, MeuStorage, $ionicLoading, $firebaseObject, $rootScope) {
+
+        var db = firebase.database().ref('Turma/' + $rootScope.turmaId);
+        var obj = $firebaseObject(db);
+        $scope.turmaEscolhida = obj;
+
+        $ionicLoading.show({
+            template: 'Carregando ...'
+        });
+        console.log(obj);
+        $ionicLoading.hide();
+        $scope.listaDeAtvs = null;
+
+    })
+
+    .controller('novaAtvCtrl', function($scope, $stateParams, firebase, MeuStorage, $ionicLoading, $firebaseObject, $rootScope) {
+
+        var db = firebase.database().ref('Turma/' + $rootScope.turmaId);
+        var obj = $firebaseObject(db);
+        $scope.turmaEscolhida = obj;
+
+        $ionicLoading.show({
+            template: 'Carregando ...'
+        });
+        console.log(obj);
+        $ionicLoading.hide();
+        $scope.listaDeAtvs = null;
+
+        $scope.activeSection = 1;
+        
+        $scope.changeSection = function(s){
+            $scope.activeSection = s;
+            console.log(s);
+        }
+
+
+        $scope.enviarAula = function() {
+            console.log($scope.form);
+        }
     })
 
     .controller('minhaAgendaCtrl', function($scope, $stateParams, firebase) {

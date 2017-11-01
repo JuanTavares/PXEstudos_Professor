@@ -14,8 +14,17 @@
 }
 
 #edit-button {
-	width: 290px;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+  width: 290px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.item .ion-thumbnail {
+  min-width: 5rem;
+  min-height: 5rem;
+  img {
+    max-width: 5rem;
+    min-width: 5rem;
+  }
 }
