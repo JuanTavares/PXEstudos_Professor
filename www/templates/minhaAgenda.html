@@ -1,3 +1,9 @@
-<ion-view title="Minha Agenda" id="page3">
-  <ion-content padding="true" class="has-header"></ion-content>
+<ion-view title="Marcar Presença" id="page3">
+    <ion-content padding="true" scroll="true" class="has-header">
+        <ion-list>
+            <ion-item ng-repeat="turma in listaDeTurmas" ui-sref="menu.presencaMateria()" ng-click="salvarTurma({{turma}})">
+                {{turma.Curso}} - {{turma.Semestre}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
 </ion-view>

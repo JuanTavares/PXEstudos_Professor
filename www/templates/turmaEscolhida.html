@@ -1,16 +1,15 @@
 <ion-view id="pageTurma">
-    <ion-nav-title>{{turmaEscolhida.Nome}}</ion-nav-title>
+    <ion-nav-title>{{materiaEscolhida}}</ion-nav-title>
     <ion-nav-buttons side="right" class="has-header">
         <button class="button button-icon icon ion-android-create" ui-sref="menu.novaAtv()"></button>
     </ion-nav-buttons>
     <ion-content padding="true" scroll="true" class="has-header">
         <ion-list>
-            <ion-item ng-repeat="atv in listaDeAtvs">
-                <a class="item item-thumbnail-left" href="#">
-                    <img ng-src="">
-                    <h2>Atividade x</h2>
-                    <p>Descrição da atividade x</p>
-                </a>
+            <ion-item ng-repeat="atv in listaDeAtvs" class="item item-thumbnail-left" ui-sref="menu.aulaEscolhida()" ng-click="salvarAula({{atv}})" ng-if="atv.source">
+                    <img ng-src="{{atv.source}}">
+                    <h2>{{atv.titulo}}</h2>
+                    <p rows="3"></p>
+                    <textarea rows="4" cols="50" style="resize: none; width:100%; background-color: white; overflow: hidden;" disabled>{{atv.descricao}}</textarea>
             </ion-item>
         </ion-list>
     </ion-content>

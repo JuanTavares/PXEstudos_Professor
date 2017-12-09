@@ -1,0 +1,30 @@
+<ion-view id="pageAulaEscolhida">
+    <ion-nav-title>Visualizar Aula</ion-nav-title>
+    <ion-nav-buttons side="right" class="has-header">
+        <button class="button button-icon icon ion-checkmark-round" ng-disabled="!(form.titulo)" ng-hide="!(form.titulo)" ng-click="enviarAula()"></button>
+    </ion-nav-buttons>
+    <ion-content padding="true" scroll="true" class="has-header card">
+        <div id="page-card23">
+            <h2 style="color:#000000;font-weight:300; text-align:center;">{{obj.titulo}}</h2>
+            <ion-item class="item-thumbnail-left" id="page-list-item11">
+                <img ng-src="{{obj.source}}">
+                <div class="spacer" style="width: 20x; height: 15px;"></div>
+                <h2 style="color:#000000;">Período: <span class="item-note">{{obj.bimestre}} Bimestre</span></h2>
+                <div class="spacer" style="width: 20x; height: 10px;"></div>
+                <h2 style="color:#000000;">Tipo de Arquivo: <span class="item-note">{{obj.tipoDeArquivo}}</span></h2>
+            </ion-item>
+            <div class="item item-body" id="page-list-item-container9">
+                <div id="page-markdown11" class="show-list-numbers-and-dots">
+                    <h2 style="margin-top:0px;color:#000000;">
+                        Descrição da Aula
+                    </h2>
+                    <div style="text-align:justify;">
+                        <label>
+                                <textarea rows="20" cols="50" style="resize: none; width:100%;  overflow: hidden ;background-color: white;" disabled>{{obj.descricao}}</textarea>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

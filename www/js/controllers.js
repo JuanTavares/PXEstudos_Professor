@@ -42,6 +42,7 @@ angular.module('app')
         var db = firebase.database().ref('Turma/');
         var obj = $firebaseArray(db);
         $scope.listaDeTurmas = obj;
+        console.log($scope.listaDeTurmas);
 
         $scope.salvarTurma = function(dados) {
             $rootScope.turmaId = dados.$id;
@@ -51,26 +52,67 @@ angular.module('app')
         $ionicLoading.hide();
     })
 
-    .controller('turmaEscolhidaCtrl', function($scope, $stateParams, firebase, MeuStorage, $ionicLoading, $firebaseObject, $rootScope) {
+    .controller('escolherMateriaCtrl', function($scope, $stateParams, firebase, MeuStorage, $ionicLoading, $firebaseObject, $firebaseArray, $rootScope) {
 
-        var db = firebase.database().ref('Turma/' + $rootScope.turmaId);
+        $ionicLoading.show({
+            template: 'Carregando ...'
+        });
+
+        var db = firebase.database().ref('Turma/' + $rootScope.turmaId + '/Materias');
+        var obj = $firebaseArray(db);
+        $scope.listaDeMaterias = obj;
+        console.log($scope.listaDeMaterias);
+        $scope.turmaEscolhida = $firebaseObject(db.parent);
+
+        $scope.salvarMateria = function(dados) {
+            $rootScope.materiaId = dados.$id;
+            console.log(dados.$id);
+        }
+
+        $ionicLoading.hide();
+    })
+
+    .controller('turmaEscolhidaCtrl', function($scope, $stateParams, firebase, MeuStorage, $ionicLoading, $firebaseObject, $firebaseArray, $rootScope, $timeout) {
+
+        var db = firebase.database().ref('Turma/' + $rootScope.turmaId + "/Materias/" + $rootScope.materiaId);
+        var obj = $firebaseArray(db);
+
+        $ionicLoading.show({
+            template: 'Carregando ...'
+        });
+        $scope.materiaEscolhida = $rootScope.materiaId;
+
+        $scope.listaDeAtvs = obj;
+        console.log(obj);
+
+        $ionicLoading.hide();
+
+        $scope.salvarAula = function(dados) {
+            $rootScope.aulaId = dados.$id;
+            console.log(dados.$id);
+        }
+
+    })
+
+    .controller('aulaEscolhidaCtrl', function($scope, $stateParams, firebase, MeuStorage, $ionicLoading, $firebaseObject, $firebaseArray, $rootScope, $timeout) {
+
+        var db = firebase.database().ref('Turma/' + $rootScope.turmaId + "/Materias/" + $rootScope.materiaId + "/" + $rootScope.aulaId);
         var obj = $firebaseObject(db);
-        $scope.turmaEscolhida = obj;
 
         $ionicLoading.show({
             template: 'Carregando ...'
         });
         console.log(obj);
         $ionicLoading.hide();
-        $scope.listaDeAtvs = null;
+
+        $scope.obj = obj;
 
     })
 
-    .controller('novaAtvCtrl', function($scope, $stateParams, firebase, MeuStorage, $ionicLoading, $firebaseObject, $rootScope) {
+    .controller('novaAtvCtrl', function($scope, $state, $stateParams, firebase, MeuStorage, $ionicLoading, $firebaseObject, $rootScope, $ionicPopup) {
 
-        var db = firebase.database().ref('Turma/' + $rootScope.turmaId);
+        var db = firebase.database().ref('Turma/' + $rootScope.turmaId + "/Materias/" + $rootScope.materiaId);
         var obj = $firebaseObject(db);
-        $scope.turmaEscolhida = obj;
 
         $ionicLoading.show({
             template: 'Carregando ...'
@@ -84,25 +126,142 @@ angular.module('app')
             switch ($scope.form.tipoDeArquivo) {
                 case "Documento":
                     $scope.source = "img/docicon.png";
+                    $scope.form.source = "img/docicon.png";
                     break;
                 case "Slide":
                     $scope.source = "img/slides.png";
+                    $scope.form.source = "img/slides.png";
                     break;
                 case "PDF":
-                    $scope.source = "img/pdf-icon.png";
+                    $scope.source = "img/pdf-Icon.png";
+                    $scope.form.source = "img/pdf-Icon.png";
                     break;
             }
         }
 
+        var final = $firebaseObject(db.parent.parent);
+
+        $scope.pegaArquivo = function(file) {
+            console.log(file);
+        }
+        /* $scope.openFileDialog = function() {
+             console.log('Clicou no input file');
+             angular.element(document.querySelector('#pegaArquivo')).triggerHandler('click');
+         };*/
 
         $scope.enviarAula = function() {
             console.log($scope.form);
+            db.push($scope.form);
+            $ionicPopup.alert({
+                title: 'Aula enviada com sucesso!',
+                template: 'O ' + $scope.form.tipoDeArquivo + ' de aula já está disponível para os alunos de ' + final.Curso + ' do ' + final.Semestre + ' Semestre.',
+            }).then(function() {
+                $state.go('menu.turmaEscolhida');
+            }).catch(function(error) {
+                $ionicPopup.alert({
+                    title: 'Ops!',
+                    template: 'Ocorreu um erro durante o envio da aula. Tente novamente mais tarde.',
+                })
+            });
         }
     })
 
-    .controller('minhaAgendaCtrl', function($scope, $stateParams, firebase) {
+    .controller('minhaAgendaCtrl', function($scope, $stateParams, firebase, MeuStorage, $ionicLoading, $firebaseObject, $firebaseArray, $rootScope) {
 
-        var usuarioLogado = firebase.auth().currentUser;
+        $ionicLoading.show({
+            template: 'Carregando ...'
+        });
+
+        var db = firebase.database().ref('Turma/');
+        var obj = $firebaseArray(db);
+        $scope.listaDeTurmas = obj;
+        console.log($scope.listaDeTurmas);
+
+        $scope.salvarTurma = function(dados) {
+            $rootScope.turmaId = dados.$id;
+            console.log(dados.$id);
+        }
+
+        $ionicLoading.hide();
+
+    })
+
+    .controller('presencaMateriaCtrl', function($scope, $stateParams, firebase, MeuStorage, $ionicLoading, $firebaseObject, $firebaseArray, $rootScope) {
+
+        $ionicLoading.show({
+            template: 'Carregando ...'
+        });
+
+        var db = firebase.database().ref('Turma/' + $rootScope.turmaId + '/Materias');
+        var obj = $firebaseArray(db);
+        $scope.listaDeMaterias = obj;
+        console.log($scope.listaDeMaterias);
+        $scope.turmaEscolhida = $firebaseObject(db.parent);
+
+        $scope.salvarMateria = function(dados) {
+            $rootScope.materiaId = dados.$id;
+            console.log(dados.$id);
+        }
+
+        $ionicLoading.hide();
+
+    })
+
+    .controller('presencaAlunoCtrl', function($scope, $stateParams, firebase, MeuStorage, $ionicLoading, $firebaseObject, $firebaseArray, $rootScope, $filter, $state, $ionicPopup) {
+
+        $ionicLoading.show({
+            template: 'Carregando ...'
+        });
+
+        var sync = firebase.database().ref('Aluno');
+        var arraySync = $firebaseArray(sync);
+        var db = firebase.database().ref('Turma/' + $rootScope.turmaId + '/Materias/' + $rootScope.materiaId);
+        var obj = $firebaseArray(db);
+        var CID = [];
+        $scope.listaDeAlunos = [];
+
+        $scope.listaDeAlunos = arraySync;
+        $ionicLoading.hide();
+
+        $scope.materiaEscolhida = $rootScope.materiaId;
+
+        $scope.today = $filter('date')(Date.now(), 'dd/MM/yyyy');
+        var hoje = $filter('date')(Date.now(), 'yyyy/MM/dd');
+
+
+        $scope.enviarPresenca = function() {
+
+            angular.forEach($scope.listaDeAlunos, function(aluno) {
+
+                if (aluno.checado) {
+                    db.child('Presenca').child(hoje).child(aluno.$id).set({
+                        Nome: aluno.Nome,
+                        Email: aluno.Email
+                    });
+                } else {
+                    db.child('Presenca').child(hoje).child(aluno.$id).remove()
+                        .then(function() {
+                            console.log("Remove succeeded.")
+                        })
+                        .catch(function(error) {
+                            console.log("Remove failed: " + error.message)
+                        });
+                }
+            });
+
+            $ionicPopup.alert({
+                title: 'Presença marcada com sucesso!',
+                template: 'Se precisar alterar a lista, marque todos os presentes novamente.',
+            }).then(function() {
+                $state.go('menu.presencaMateria');
+            }).catch(function(error) {
+                $ionicPopup.alert({
+                    title: 'Ops!',
+                    template: 'Ocorreu um erro durante o envio da aula. Tente novamente mais tarde.',
+                })
+            });
+
+        }
 
     })
 

@@ -15,12 +15,12 @@ angular.module('app', ['ionic', 'ngCordova', 'firebase', 'idf.br-filters'])
     .config(function() {
         // Initialize Firebase
         var config = {
-            apiKey: "AIzaSyCGED6yTReL-g04YOvMdsJzBPXfWMxypEY",
-            authDomain: "pxestudos.firebaseapp.com",
-            databaseURL: "https://pxestudos.firebaseio.com",
+            apiKey: "---",
+            authDomain: "---",
+            databaseURL: "---",
             projectId: "pxestudos",
-            storageBucket: "pxestudos.appspot.com",
-            messagingSenderId: "670133275789"
+            storageBucket: "---",
+            messagingSenderId: "---"
         };
         firebase.initializeApp(config);
     })

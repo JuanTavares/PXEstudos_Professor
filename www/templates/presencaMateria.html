@@ -1,0 +1,10 @@
+<ion-view id="pagePresencaMateria">
+    <ion-nav-title>{{turmaEscolhida.Nome}}</ion-nav-title>
+    <ion-content padding="true" class="has-header">
+        <ion-list>
+            <ion-item ng-repeat="materia in listaDeMaterias" ui-sref="menu.presencaAluno()" ng-click="salvarMateria({{materia}})">
+                {{materia.$id}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

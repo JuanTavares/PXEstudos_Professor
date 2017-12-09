@@ -1,14 +1,14 @@
 <ion-view id="pageNovaAtv">
-    <ion-nav-title>{{turmaEscolhida.Nome}}</ion-nav-title>
+    <ion-nav-title>Nova Aula</ion-nav-title>
     <ion-nav-buttons side="right" class="has-header">
-        <button class="button button-icon icon ion-checkmark-round" ng-click="enviarAula()"></button>
+        <button class="button button-icon icon ion-checkmark-round" ng-disabled="!(form.titulo)" ng-hide="!(form.titulo)" ng-click="enviarAula()"></button>
     </ion-nav-buttons>
     <ion-content padding="true" scroll="true" class="has-header card">
         <div id="page-card23">
-            <form>
+            <form name="formulario">
                 <ion-item id="page-list-item-divider1">
                     <label class="item item-input">
-                        <input type="text" ng-model="form.titulo" placeholder="Título da Aula" required>
+                        <input type="text" name="titulo" ng-model="form.titulo" placeholder="Título da Aula" required>
                     </label>
                 </ion-item>
                 <ion-item class="item-thumbnail-left" id="page-list-item11">
@@ -31,7 +31,8 @@
                     <label class="item item-input"></label>
                 </ion-item>
                 <div style="margin-right:-20px;">
-                    <button id="page-button7" style="left:-10px;" class="button button-positive button-full">Escolher Arquivo</button>
+                    <!--<button id="page-button7" type="file" style="left:-10px;" class="button button-positive button-full" ng-click="openFileDialog()">Escolher Arquivo</button>-->
+                    <input type="file" id="pegaArquivo" ng-model="arquivo" ng-click="pegaArquivo(file)"/>
                 </div>
                 <div class="item item-body" id="page-list-item-container9">
                     <div id="page-markdown11" class="show-list-numbers-and-dots">

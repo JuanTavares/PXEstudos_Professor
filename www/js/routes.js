@@ -24,12 +24,32 @@ angular.module('app')
                 }
             })
 
+            .state('menu.escolherMateria', {
+                url: '/escolherMateria',
+                views: {
+                    'side-menu21': {
+                        templateUrl: 'templates/escolherMateria.html',
+                        controller: 'escolherMateriaCtrl'
+                    }
+                }
+            })
+
             .state('menu.turmaEscolhida', {
                 url: '/turmaEscolhida',
                 views: {
                     'side-menu21': {
                         templateUrl: 'templates/turmaEscolhida.html',
                         controller: 'turmaEscolhidaCtrl'
+                    }
+                }
+            })
+
+            .state('menu.aulaEscolhida', {
+                url: '/aulaEscolhida',
+                views: {
+                    'side-menu21': {
+                        templateUrl: 'templates/aulaEscolhida.html',
+                        controller: 'aulaEscolhidaCtrl'
                     }
                 }
             })
@@ -50,6 +70,26 @@ angular.module('app')
                     'side-menu21': {
                         templateUrl: 'templates/minhaAgenda.html',
                         controller: 'minhaAgendaCtrl'
+                    }
+                }
+            })
+
+            .state('menu.presencaMateria', {
+                url: '/presencaMateria',
+                views: {
+                    'side-menu21': {
+                        templateUrl: 'templates/presencaMateria.html',
+                        controller: 'presencaMateriaCtrl'
+                    }
+                }
+            })
+
+            .state('menu.presencaAluno', {
+                url: '/presencaAluno',
+                views: {
+                    'side-menu21': {
+                        templateUrl: 'templates/presencaAluno.html',
+                        controller: 'presencaAlunoCtrl'
                     }
                 }
             })
